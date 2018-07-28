@@ -24,6 +24,7 @@
     "composition",
     "objects"
   ],
-  "repository": "",
-  "bugs": ""
+  "homepage": "https://github.com/ismorozs/roxp",
+  "repository": "https://github.com/ismorozs/roxp.git",
+  "bugs": "https://github.com/ismorozs/roxp/issues"
 }
