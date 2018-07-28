@@ -84,7 +84,7 @@ Arguments passing to the function can be:
 | `{ }` | Options| options from the object will be applied to the argument on the left in the arguments list | `'x', { times: 5 }` | `/x{5,5}/` |
 
 Passing ```Roxp``` instance into ```Roxp``` function  will copy RegExp of a given instance into a new RegExp produced by function.
-Notice: ```Roxp``` produces RegExp based on passed `String` type without any transformations of the string.  
+Notice: ```Roxp``` produces RegExp from strings (of type `String`) without any transformation of them.  
 So the following produced ```Roxp``` instances are identical
 ```js
 const objectiveApproach = Roxp(
@@ -141,7 +141,7 @@ Or with ```Roxp``` you add option ```{ eitherOne }``` to the right of the groupi
 
 | Option appearance | Example arguments | Produced RegExp |
 |-------------------|-------------------|-----------------|
-| { eitherOne } | `[[ 'aaa', 'bbb', 'ccc' ]], { eitherOne: true }` | `/aaa|bbb|ccc/` |
+| { eitherOne } | `[[ 'aaa', 'bbb', 'ccc' ]], { eitherOne: true }` | `/aaa\|bbb\|ccc/` |
 
 #### Negating
 Use negate option if you don't want your RegExp to match against particular symbols
