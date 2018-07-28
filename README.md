@@ -1,5 +1,6 @@
 # Roxp
-Easy to use library for creating regular expressions of any complexity through combining built-in data types such as ```Strings```, ```Objects``` and ```Arrays```, as well as ```Roxp``` objects themselves. Hence the name ```Roxp``` coming from **R**egular **O**bjective e**XP**ression.
+Easy to use library for creating regular expressions of any complexity through combining built-in data types such as ```Strings```, ```Objects``` and ```Arrays```, as well as ```Roxp``` objects themselves.  
+Hence the name ```Roxp``` coming from **R**egular **O**bjective e**XP**ression.
 
 ## Why?
 Because the longer the regular expressions is in its classical primordial form the harder it is to read, to understand, and to maintain.
@@ -75,12 +76,13 @@ Still arguments must comply some rules, so that the function would understand wh
 Arguments passing to the function can be:
 
 | Appearance | Name | Explanation | Example argument(s) | Produced RegExp |
-|------------|------|-------------|--------------|------------------|
-| `'string'`| String | simple string| `'string'`|  `/string/`
+|------------|------|-------------|---------------------|-----------------|
+| `'string'`| String | simple string| `'string'`|  `/string/` |
 | `[ ]`| Character set| simple character set| `['sym','blols', '0-9']` | `/[symbols0-9]/`|
 | `[[ ]]` | Grouping | everything inside double brackets will be considered as a logical unit when applying options on the right in the arguments list| `[[ 'string', [0-9] ]], { onceOrMore: true }` |  `/(?:string[0-9])+/` |
-| `[{ }]` | Backreference | backreference to the group defined earlier | `'\\w', { group: 'a' }, [{ repeatMatch: 'a' }]` | `/(\w)\1/`
+| `[{ }]` | Backreference | backreference to the group defined earlier | `'\\w', { group: 'a' }, [{ repeatMatch: 'a' }]` | `/(\w)\1/` |
 | `{ }` | Options| options from the object will be applied to the argument on the left in the arguments list | `'x', { times: 5 }` | `/x{5,5}/` |
+
 Passing ```Roxp``` instance into ```Roxp``` function  will copy RegExp of a given instance into a new RegExp produced by function.
 Notice: ```Roxp``` produces RegExp based on passed `String` type without any transformations of the string.  
 So the following produced ```Roxp``` instances are identical
@@ -104,6 +106,7 @@ You modify argument-sub-RegExps in different ways by following them with objects
 Full list of options is shown bellow.
 #### Quantifiers
 You add them to explain how many repeating symbols you want to match
+
 | Option appearance | Example arguments | Produced RegExp |
 |-------------------|-------------------|-----------------|
 | { '>' } | `'x', { '>': 2  }` | `/x{3,}/` |
@@ -116,13 +119,18 @@ You add them to explain how many repeating symbols you want to match
 | { onceOrNever } | `'x', { onceOrNever: true  }` | `/x?/` |
 | { onceOrMore } | `'x', { onceOrMore: true  }` | `/x+/` |
 | { zeroOrMore } | `'x', { zeroOrMore: true  }` | `/x*/` |
-Any quantifier additionally  can be followed by `lazy` option, making this quantifier lazy
+
+Any quantifier additionally  can be followed by `lazy` option, making this quantifier lazy.  
+
 Examples:
+
 | Option appearance | Example arguments | Produced RegExp |
 |-------------------|-------------------|-----------------|
 | { onceOrMore, lazy } | `'x', { onceOrMore: true, lazy: true }` | `/x+?/` |
 | { zeroOrMore, lazy } | `'x', { zeroOrMore: true, lazy: true  }` | `/x*?/` |
+
 If it is a grouping (```[[ ]]```) you want to apply quantifier options to, and you didn't specified a group name of this given grouping, grouping will be enclosed in non-capturing group (```(?:)```).
+
 | Option appearance | Example arguments | Produced RegExp |
 |-------------------|-------------------|-----------------|
 | { onceOrMore } | `[[ '\\w', [1,2,3], '\\w' ]], { onceOrMore: true }` | `/(?:\w[123]\w)+/` |
@@ -130,12 +138,14 @@ If it is a grouping (```[[ ]]```) you want to apply quantifier options to, and y
 #### Alternation
 If you want to capture either of strings in your RegExp, you put alternation symbol (```|```) between those strings.  
 Or with ```Roxp``` you add option ```{ eitherOne }``` to the right of the grouping.
+
 | Option appearance | Example arguments | Produced RegExp |
 |-------------------|-------------------|-----------------|
 | { eitherOne } | `[[ 'aaa', 'bbb', 'ccc' ]], { eitherOne: true }` | `/aaa|bbb|ccc/` |
 
 #### Negating
-Use negate option if you don't want your string to match against particular symbols
+Use negate option if you don't want your RegExp to match against particular symbols
+
 | Option appearance | Example arguments | Produced RegExp |
 |-------------------|-------------------|-----------------|
 | { mustNotMatch } | `['abc'], { mustNotMatch: true  }` | `/[^abc]/` |
@@ -144,11 +154,14 @@ Use negate option if you don't want your string to match against particular symb
 
 #### Capturing groups naming
 Give a capturing group a name to refer to it later in methods or for backreferencing
+
 | Option appearance | Example arguments | Produced Roxp object |
-|-------------------|-------------------|-----------------|
+|-------------------|-------------------|----------------------|
 | { group } | `'string', { group: 'string'  }` | `Roxp { regExp: /(string)/, groups: ['string'] }` |
 || `[['x', 'y', 'z']], { group: 'xyz'  }` | `Roxp { regExp: /(xyz)/, groups: ['xyz'] }` |
-```prefixGroups``` option is used to resolve group naming conflicts between passed ```Roxp``` instances that may have the same group names. 
+
+```prefixGroups``` option is used to resolve group naming conflicts between passed ```Roxp``` instances that may have the same group names. |
+
 Example:
 ```js
 const childRoxp = Roxp('qwerty', { group: 'childGroup' });
@@ -158,11 +171,12 @@ Roxp(
 );
 // => Roxp { regExp: /(qwerty)(qwerty)/, groups: ['firstChildGroup', 'secondChildGroup'] }
 ```
-To create capturing group you don't acutally have to give it a meaningful name.  
+To create capturing group you don't acutally have to give it a meaningful name. 
 ```{ group: true }``` is legitimate option, but this way you probably won't be able to reference such a group by name in future.
-| Option appearance | Example arguments | Produced Roxp object |
-|-------------------|-------------------|-----------------|
-|| `'nameless', { group: 'true'  }` | `Roxp { regExp: /(nameless)/, groups: [true] }` |
+
+| Example arguments | Produced Roxp object |
+|-------------------|-----------------|
+| `'nameless', { group: 'true'  }` | `Roxp { regExp: /(nameless)/, groups: [true] }` |
 
 #### Backreferencing
 Put backreferences (backslash + group number) in places where you expect exact symbolic matches to already matched groups at run-time.
@@ -184,21 +198,21 @@ const roxp = Roxp(
 roxp.test('aaaaaa');
 // => true
 ```
-
-#### Methods
+---
+### Instance Methods
 Every ```Roxp``` instance holds within a group of methods which mostly just delegate execution to underlying RegExp or String objects.  
 But there're exceptions.
-##### Roxp#test (String stringToTest)
-##### Roxp#check (String stringToTest)
+#### Roxp#test (String stringToTest)
+#### Roxp#check (String stringToTest)
 Two methods with the same behavior. Checks if ```stringToTest``` argument is matched against underlying RegExp and returns ```true``` or ```false```, accordingly.
 Equivalent to ```RegExp#test```
 ```js
 Roxp('string').test('string');
 // => true
 ```
-##### Roxp#find (String stringToFindGroups)
-##### Roxp#exec (String stringToFindGroups)
-##### Roxp#search (String stringToFindGroups)
+#### Roxp#find (String stringToFindGroups)
+#### Roxp#exec (String stringToFindGroups)
+#### Roxp#search (String stringToFindGroups)
 Three methods with the same behavior. Checks if ```stringToFindGroups``` is matched and returns an array-object of matched strings, groups, index, etc. Behaves in the same way as ```RegExp#exec```, but in addition adds named capturing groups in the result set.
 ```js
 Roxp(
@@ -208,7 +222,7 @@ Roxp(
 ).search('zxc-123');
 // => [ letters: 'zxc', digits: '123', ... ]
 ```
-##### Roxp#replace (String stringToReplace, Function replaceFunction)
+#### Roxp#replace (String stringToReplace, Function replaceFunction)
 Finds and replaces matches in the string. Resembles behavior of ```String#replace```.  
 ```replaceFunction``` will perform replacing on matched snippets in ```stringToReplace``` string.  
 ```replaceFunction``` takes in one object, which holds all found matches on the ```stringToReplace```, as well as index, etc.
@@ -228,8 +242,9 @@ const $ = Roxp.specialCharacters();
 // => { letter: '\\w', digit: '\\d', space: '\\s', ... }
 ```
 and then you use this object values for easier creation of RegExp that requiere use of special characters, forgetting about counting backslashes before each of them at the same time.
+
 | Special character key | Produced RegExp | In plain string |
-|-----------------------|-----------------|--------------|
+|-----------------------|-----------------|-----------------|
 | `$.letter` |  `/\w/` | `\\w`|
 | `$.digit` |  `/\d/` | `\\d`
 | `$.space` |  `/\s/` | `\\s`
@@ -245,7 +260,7 @@ and then you use this object values for easier creation of RegExp that requiere 
 |    `$['.']` | `/\./` | `\\\.`
 |    `$['$']` | `/\$/` | `\\\$`
 |    `$['^']` | `/\^/` | `\\\^`
-|    `$['|']` | `/\|/` | `\\\|`
+|    `$['\|']` | `/\\|/` | `\\\|`
 |    `$['?']` | `/\?/` | `\\\?`
 |    `$['*']` | `/\*/` | `\\\*`
 |    `$['+']` | `/\+/` | `\\\+`
