@@ -1,0 +1,29 @@
+{
+  "name": "roxp",
+  "version": "0.1.0",
+  "description": "Library for creating regular expressions of any complexity through combining built-in data types such as Strings, Objects and Arrays, as well as Roxp objects themselves.",
+  "main": "roxp.js",
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "jasmine": "3.1.0",
+    "jasmine-ts-console-reporter": "3.1.1",
+    "uglifyjs": "2.4.11"
+  },
+  "scripts": {
+    "test": "jasmine --config=test/jasmine.json --reporter=jasmine-ts-console-reporter",
+    "uglify": "sh ./babelify-uglify.sh"
+  },
+  "author": "Igor Morozov",
+  "license": "MIT",
+  "keywords": [
+    "regular",
+    "expressions",
+    "regexp",
+    "creation",
+    "composition",
+    "objects"
+  ],
+  "repository": "",
+  "bugs": ""
+}
