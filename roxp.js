@@ -41,7 +41,9 @@
 
   buildInstance.specialCharacters = () => specialChararacters;
   buildInstance.setFlagsGlobally = (newFlags) => Object.assign(globalFlags, newFlags);
-  buildInstance.withFlags = (localFlags) => (buildParts) => new Roxp([buildParts], localFlags);
+  buildInstance.withFlags = (localFlags) => function () {
+    return new Roxp(arguments, localFlags);
+  };
 
   if (isModuleGlobal) {
     globalObj.exports = buildInstance;
