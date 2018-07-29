@@ -1,6 +1,6 @@
 {
   "name": "roxp",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Library for creating regular expressions of any complexity through combining built-in data types such as Strings, Objects and Arrays, as well as Roxp objects themselves.",
   "main": "roxp.js",
   "devDependencies": {

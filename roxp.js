@@ -1,5 +1,11 @@
 (function (globalObj, isModuleGlobal) {
 
+  const validOptions = [
+    '<', '>', '<=', '>=', '=',
+    'times', 'inRange', 'onceOrNever', 'onceOrMore', 'zeroOrMore', 'lazy',
+    'group', 'mustNotMatch', 'repeatMatch', 'eitherOne', 'prefixGroups'
+  ];
+
   const specialChararacters = {
     letter: '\\w',
     digit: '\\d',
@@ -72,6 +78,7 @@
     for (let i = 0; i < buildParts.length; i++) {
       const buildPart = buildParts[i];
       const partOpts = ( isObject(buildParts[ i + 1 ]) && !isRoxpInstance(buildParts[i + 1]) ) ? buildParts[ ++i ] : {};
+      checkOptions(partOpts);
       const partType = determinePartType(buildPart);
 
       let regExpStr = '';
@@ -149,6 +156,14 @@
     };
   }
 
+  function checkOptions (opts) {
+    for (let optKey in opts) {
+      if (!~validOptions.indexOf(optKey)) {
+        throw TypeError("'" + optKey + "' isn't a valid option to pass into Roxp constructor");
+      }
+    }
+  }
+
   function determinePartType (buildPart) {
     if (isRoxpInstance(buildPart)) {
       return 'instance';
@@ -208,6 +223,10 @@
           numberedQuantifier[1] = numberedQuantifier[3] = null;
           specialQuantifier = '*';
       }
+
+      if (optVal === 'lazy') {
+        specialQuantifier += '?';
+      }
     }
 
     let quantifier = (numberedQuantifier[1] || numberedQuantifier[3]) ? numberedQuantifier.join('') : specialQuantifier;
@@ -222,6 +241,9 @@
   function setupBackreferences (regExpStr, groups, backreferencesObj) {
     for (let groupName in backreferencesObj) {
       const backreferenceIdx = groups.indexOf(groupName) + 1;
+      if (!backreferenceIdx) {
+        throw Error("Trying to setup a backreference to not existing group " + "'" + groupName + "'");
+      }
       regExpStr = regExpStr.replace(backreferencesObj[groupName], "\\" + backreferenceIdx);
     }
     return regExpStr;
