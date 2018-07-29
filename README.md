@@ -289,16 +289,19 @@ Roxp.withFlags('gi')('globalCaseInsensitve');
 // => Roxp { regExp: /globalCaseInsensitve/gi }
 ```
 
-You can set flags globally as well for every created ```Roxp``` instance after settings given flags, using method ```Roxp.setFlagsGlobally()```
+You can set flags globally as well for every created ```Roxp``` instance after settings given flags, using method ```Roxp.setFlagsGlobally()```  
+
 ```setFlagsGlobally()``` takes in one object argument of format ```{ flagName: boolean, ... }```, and then adds ```true``` flags and removes ```false``` flags to/from set of global ```Roxp``` flags.
 Example:
 ```js
 const a = Roxp('a');
 // => Roxp { regExp: /a/ }
+
 Roxp.setFlagsGlobally({ g: true, i: true });
 const b = Roxp('b');
 // => Roxp { regExp: /b/gi }
 // all created instances will have 'g' and 'i' flags from now
+
 Roxp.setFlagsGlobally({ i: false });
 const c = Roxp('c');
 // => Roxp { regExp: /c/g }
