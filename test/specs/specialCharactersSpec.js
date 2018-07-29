@@ -1,4 +1,4 @@
-const Roxp = require('../../roxp.min.js');
+const Roxp = require('../../roxp.js');
 
 describe("Roxp methods", function () {
 
@@ -27,9 +27,11 @@ describe("Roxp methods", function () {
       $['['],
       $[']'],
       $['\\'],
-      $['.']
+      $['.'],
+      $.dot
     );
-    const testString = 'a1 !ax$^|?*+(){}[]\\.'
+
+    const testString = 'a1 !ax$^|?*+(){}[]\\..'
 
     expect(
       roxp.test(testString)

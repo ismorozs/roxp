@@ -20,6 +20,7 @@
     lf: '\\n',
     cr: '\\r',
     feed: '\\f',
+    dot: '\\\.',
     '\\': '\\\\',
     '.': '\\\.',
     '$': '\\\$',
@@ -36,12 +37,11 @@
     ']': '\\\]',
   };
 
-  const globalFlags = {
-    'g': true,
-  }
+  const globalFlags = {}
 
   buildInstance.specialCharacters = () => specialChararacters;
-  buildInstance.setFlags = (newFlags) => Object.assign(globalFlags, newFlags);
+  buildInstance.setFlagsGlobally = (newFlags) => Object.assign(globalFlags, newFlags);
+  buildInstance.withFlags = (localFlags) => (buildParts) => new Roxp([buildParts], localFlags);
 
   if (isModuleGlobal) {
     globalObj.exports = buildInstance;
@@ -53,12 +53,12 @@
     return new Roxp(arguments);
   }
 
-  function Roxp (buildParts) {
+  function Roxp (buildParts, localFlags) {
     const result = buildRegExp(buildParts);
     this.groups = result.groups;
     this.backreferences = result.backreferences;
     this.regExpStr = setupBackreferences(result.regExpStr, result.groups, result.backreferences);
-    const flags = getTrueKeys(globalFlags);
+    const flags = localFlags ||  getTrueKeys(globalFlags);
     this.regExp = new RegExp(this.regExpStr, flags);
   }
 

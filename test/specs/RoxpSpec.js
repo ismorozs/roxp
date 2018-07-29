@@ -1,4 +1,4 @@
-const Roxp = require('../../roxp.min.js');
+const Roxp = require('../../roxp.js');
 
 describe("Roxp", function () {
 
@@ -15,7 +15,7 @@ describe("Roxp", function () {
 
     expect(
       strRoxp.regExp
-    ).toEqual( new RegExp('asdf', 'g') );
+    ).toEqual( new RegExp('asdf') );
 
   });
 
@@ -25,7 +25,7 @@ describe("Roxp", function () {
 
     expect(
       setRoxp.regExp
-    ).toEqual( new RegExp('[xyz]', 'g') );
+    ).toEqual( new RegExp('[xyz]') );
 
   });
 
@@ -37,7 +37,7 @@ describe("Roxp", function () {
 
     expect(
       negativeSetRoxp.regExp
-    ).toEqual( new RegExp('[^xyz]', 'g') );
+    ).toEqual( new RegExp('[^xyz]') );
 
   });
 
@@ -49,7 +49,7 @@ describe("Roxp", function () {
 
     expect(
       negativeGroupingRoxp.regExp
-    ).toEqual( new RegExp('(?!asdf)', 'g') );
+    ).toEqual( new RegExp('(?!asdf)') );
 
   });
 
@@ -61,7 +61,7 @@ describe("Roxp", function () {
 
     expect(
       nonCapturingRoxp.regExp
-    ).toEqual( new RegExp('(?:asdf)?', 'g') );
+    ).toEqual( new RegExp('(?:asdf)?') );
 
   });
 
@@ -71,7 +71,7 @@ describe("Roxp", function () {
 
     expect(
       multiRoxp.regExp
-    ).toEqual( new RegExp('asdf[xyz]', 'g') );
+    ).toEqual( new RegExp('asdf[xyz]') );
 
   });
 

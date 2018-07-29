@@ -256,8 +256,9 @@ and then you use this object values for easier creation of RegExp that requiere 
 | `$.notWordBoundary` |  `/\B/` | `\\B`
 | `$.notBound` | `/\B/` | `\\B`
 | `$.tab` | `/\t/` | `\\t`
-| `$['\\']` | `/\\/` | `\\\\`
+|    `$.dot` | `/\./` | `\\\.`
 |    `$['.']` | `/\./` | `\\\.`
+| `$['\\']` | `/\\/` | `\\\\`
 |    `$['$']` | `/\$/` | `\\\$`
 |    `$['^']` | `/\^/` | `\\\^`
 |    `$['\|']` | `/\\|/` | `\\\|`
@@ -280,49 +281,28 @@ and then you use this object values for easier creation of RegExp that requiere 
 |`$.any` |  `/./` | `.`
 
 ### Flags
-Setting flags is done through ```Roxp.setFlags()``` method  
-```setFlags``` takes in one object argument of format ```{ flagName: boolean, ... }```, and then adds ```true``` flags and removes ```false``` flags to/from set of global ```Roxp``` flags.
-Initially global match (```g```) flag is applied.
+Setting flags can be done individually for every ```Roxp``` instance through ```Roxp.withFlags()``` method, which will return constructor ```Roxp``` function saving in memory that this particular instance should be with given flags.  
+Example:
+
+```js
+Roxp.withFlags('gi')('globalCaseInsensitve');
+// => Roxp { regExp: /globalCaseInsensitve/gi }
+```
+
+You can set flags globally as well for every created ```Roxp``` instance after settings given flags, using method ```Roxp.setFlagsGlobally()```
+```setFlagsGlobally()``` takes in one object argument of format ```{ flagName: boolean, ... }```, and then adds ```true``` flags and removes ```false``` flags to/from set of global ```Roxp``` flags.
 Example:
 ```js
-const withInitialGlobalFlag = Roxp('a');
-// => Roxp { regExp: /a/g }
-withInitialGlobalFlag.test('a');
-// => true
-withInitialGlobalFlag.test('a');
-// => false
-// because string 'a' ended
-
-Roxp.setFlags({ g: false });
-const withoutGlobalFlag = Roxp('b');
-// => Roxp { regExp: /b/ }
-withoutGlobalFlag.test('b');
-// => true
-withoutGlobalFlag.test('b');
-// => true
-// without 'g' matching always goes from 0 index
-
-Roxp.setFlags({ i: true });
-
-const caseInsensitive = Roxp('asdf');
-// => Roxp { regExp: /asdf/i }
-// notice: `g` flag already disabled
-
-caseInsensitive.test('Asdf');
-// => true
-caseInsensitive.test('ASDF');
-// => true
-```
-Notice: already created Roxp objects won't change their RegExp flags after setting new global flags with ```.setFlags``` method.
-```js
-const before = Roxp('global');
-// => Roxp { regExp: /global/g }
-
-Roxp.setFlags({ g: false });
-
-console.log(before)
-// => Roxp { regExp: /global/g }
-// 'g' flag for this Roxp instance is left untouched
+const a = Roxp('a');
+// => Roxp { regExp: /a/ }
+Roxp.setFlagsGlobally({ g: true, i: true });
+const b = Roxp('b');
+// => Roxp { regExp: /b/gi }
+// all created instances will have 'g' and 'i' flags from now
+Roxp.setFlagsGlobally({ i: false });
+const c = Roxp('c');
+// => Roxp { regExp: /c/g }
+// 'i' flag was removed, only 'g' is left
 ```
 
 ---

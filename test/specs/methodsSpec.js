@@ -1,10 +1,8 @@
-const Roxp = require('../../roxp.min.js');
+const Roxp = require('../../roxp.js');
 
 describe("Roxp methods", function () {
 
   const $ = Roxp.specialCharacters();
-
-  Roxp.setFlags({ g: false });
 
   const testString = '111-asdf-222';
 
@@ -19,8 +17,6 @@ describe("Roxp methods", function () {
     '-',
     digits, { group: 'secondThreeDigits' }
   );
-
-  Roxp.setFlags({ g: true });
 
   it("has working .test() and .check()", function () {
 

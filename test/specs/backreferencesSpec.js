@@ -1,4 +1,4 @@
-const Roxp = require('../../roxp.min.js');
+const Roxp = require('../../roxp.js');
 
 describe("Roxp named groups and backreferences", function () {
 
@@ -20,7 +20,7 @@ describe("Roxp named groups and backreferences", function () {
 
     expect(
       roxp1.regExp
-    ).toEqual( new RegExp('(\\w{4,4}(\\w{3,3})(\\d{3,3})\\w{4,4})\\1\\3\\2', 'g') );
+    ).toEqual( new RegExp('(\\w{4,4}(\\w{3,3})(\\d{3,3})\\w{4,4})\\1\\3\\2') );
 
   });
 

@@ -1,4 +1,4 @@
-const Roxp = require('../../roxp.min.js');
+const Roxp = require('../../roxp.js');
 
 describe("Roxp grouping", function () {
 
@@ -19,7 +19,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp1.regExp
-    ).toEqual( new RegExp('a|b|c', 'g') );
+    ).toEqual( new RegExp('a|b|c') );
 
   });
 
@@ -31,7 +31,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp2.regExp
-    ).toEqual( new RegExp('(zzz[1234])', 'g') );
+    ).toEqual( new RegExp('(zzz[1234])') );
 
     expect(
       roxp2.groups
@@ -47,7 +47,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp3.regExp
-    ).toEqual( new RegExp('(string)', 'g') );
+    ).toEqual( new RegExp('(string)') );
 
     expect(
       roxp3.groups
@@ -63,7 +63,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp4.regExp
-    ).toEqual( new RegExp('(?:asdfzxcv){2,2}', 'g') );
+    ).toEqual( new RegExp('(?:asdfzxcv){2,2}') );
 
   });
 
@@ -75,7 +75,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp9.regExp
-    ).toEqual( new RegExp('(?:asdfzxcv){2,2}', 'g') );
+    ).toEqual( new RegExp('(?:asdfzxcv){2,2}') );
 
   });
 
@@ -85,7 +85,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp5.regExp
-    ).toEqual( new RegExp('a|b|c(string)', 'g') );
+    ).toEqual( new RegExp('a|b|c(string)') );
 
     expect(
       roxp5.groups
@@ -102,7 +102,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp7.regExp
-    ).toEqual( new RegExp('(string)(string)', 'g') );
+    ).toEqual( new RegExp('(string)(string)') );
 
     expect(
       roxp7.groups
@@ -121,7 +121,7 @@ describe("Roxp grouping", function () {
 
     expect(
       roxp8.regExp
-    ).toEqual( new RegExp('((string)(string))a|b|c(zzz[1234])((string)(string))', 'g') );
+    ).toEqual( new RegExp('((string)(string))a|b|c(zzz[1234])((string)(string))') );
 
     expect(
       roxp8.groups
